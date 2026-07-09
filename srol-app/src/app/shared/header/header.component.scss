@@ -1,0 +1,194 @@
+.app-toolbar {
+  height: 64px;
+  padding: 0 24px;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--violet), #a855f7);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.brand-tag {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ---- Navegación principal ------------------------------------------ */
+.app-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 28px;
+  flex-shrink: 0;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: var(--surface-hover);
+    color: var(--text);
+  }
+}
+
+.nav-link.is-active {
+  background: var(--violet-soft);
+  color: var(--violet-strong);
+}
+
+.role-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  margin-right: 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-hover);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.role-pill.is-admin {
+  border-color: rgba(124, 58, 237, 0.3);
+  background: var(--violet-soft);
+  color: var(--violet-strong);
+}
+
+.user-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text) !important;
+  font-family: var(--font-body);
+  font-weight: 600;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.user-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--violet-soft);
+  color: var(--violet-strong);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.user-name {
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Adaptación a pantallas angostas -------------------------------
+   En vez de desbordarse (obligando a hacer zoom-out para ver todo),
+   el header va ocultando lo menos esencial progresivamente. */
+@media (max-width: 1100px) {
+  .brand-tag {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .app-nav {
+    margin-left: 12px;
+  }
+
+  .role-pill .label {
+    display: none;
+  }
+
+  .role-pill {
+    padding: 6px 8px;
+    margin-right: 4px;
+  }
+}
+
+@media (max-width: 700px) {
+  .app-toolbar {
+    padding: 0 12px;
+  }
+
+  .nav-link .label {
+    display: none;
+  }
+
+  .nav-link {
+    padding: 8px;
+  }
+
+  .user-name {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-text {
+    display: none;
+  }
+}

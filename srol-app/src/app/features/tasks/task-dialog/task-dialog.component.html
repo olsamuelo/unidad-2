@@ -1,0 +1,49 @@
+<div class="dialog-header">
+  <span class="dialog-icon" [class.is-edit]="isEdit">
+    <mat-icon>{{ isEdit ? 'edit' : 'add_task' }}</mat-icon>
+  </span>
+  <div>
+    <h2 mat-dialog-title>{{ isEdit ? 'Editar tarea' : 'Nueva tarea' }}</h2>
+    <p class="dialog-subtitle">
+      {{ isEdit ? 'Actualiza los detalles de la tarea' : 'Completa los datos para crearla' }}
+    </p>
+  </div>
+</div>
+
+<form [formGroup]="taskForm" (ngSubmit)="onSave()">
+  <mat-dialog-content>
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Título</mat-label>
+      <input matInput formControlName="title" />
+      @if (isInvalid('title')) {
+        <mat-error>El título debe tener entre 3 y 100 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Descripción</mat-label>
+      <textarea matInput rows="3" formControlName="description"></textarea>
+      @if (isInvalid('description')) {
+        <mat-error>La descripción debe tener entre 3 y 200 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    @if (isEdit) {
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="status">
+          @for (option of statusOptions; track option) {
+            <mat-option [value]="option">{{ statusLabels[option] }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+    <button mat-flat-button class="btn-create" type="submit" [disabled]="saving()">
+      {{ saving() ? 'Guardando...' : 'Guardar' }}
+    </button>
+  </mat-dialog-actions>
+</form>

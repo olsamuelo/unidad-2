@@ -1,0 +1,12 @@
+services:
+
+  postgres-db:
+    image: postgres
+    container_name: postgres
+    restart: always
+    ports:
+      - "54320:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin123
+      - POSTGRES_DB=rcs_db

@@ -1,0 +1,345 @@
+/* ==========================================================================
+   GIR6091 · TASKS — Design tokens (v2)
+   Identidad clara y moderna sobre fondo claro. Acciones codificadas por color:
+   crear = violeta · editar = verde azulado (teal) · borrar = rosa/rojo
+   ========================================================================== */
+
+@use '@angular/material' as mat;
+
+/* Tema M3 claro con paleta violeta como primaria y naranja como acento
+   terciario. Sustituye por completo el tema oscuro azul/negro anterior. */
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$violet-palette,
+      tertiary: mat.$orange-palette,
+    ),
+    typography: Inter,
+    density: 0,
+  ));
+}
+
+:root {
+  /* Superficies */
+  --bg: #f6f5fb;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-hover: #f4f1fc;
+  --border: #e6e2f2;
+  --border-soft: #eeebf7;
+
+  /* Texto */
+  --text: #211a35;
+  --text-muted: #6d6483;
+  --text-faint: #9d95b3;
+
+  /* Acento primario — crear / navegación / foco */
+  --violet: #7c3aed;
+  --violet-strong: #6425d0;
+  --violet-soft: #efe7fd;
+  --violet-softer: #f6f1ff;
+
+  /* Editar */
+  --teal: #0d9488;
+  --teal-strong: #0f766e;
+  --teal-soft: #e1f5f2;
+
+  /* Borrar */
+  --rose: #e11d48;
+  --rose-strong: #be123c;
+  --rose-soft: #fde5eb;
+
+  /* Estado pendiente */
+  --amber: #d97706;
+  --amber-soft: #fdf1e0;
+
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow-sm: 0 1px 2px rgba(33, 26, 53, 0.06);
+  --shadow-md: 0 8px 24px rgba(76, 29, 149, 0.08);
+  --shadow-lg: 0 24px 48px rgba(33, 26, 53, 0.16);
+
+  --font-display: 'Sora', 'Inter', sans-serif;
+  --font-body: 'Inter', 'Roboto', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.page-container {
+  max-width: 1140px;
+  margin: 32px auto;
+  padding: 0 20px 48px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* ---- Snackbars ---------------------------------------------------- */
+.error-snackbar {
+  background-color: #fff !important;
+  color: var(--rose-strong) !important;
+  border: 1px solid var(--rose-soft);
+  box-shadow: var(--shadow-md);
+}
+
+.success-snackbar {
+  background-color: #fff !important;
+  color: var(--teal-strong) !important;
+  border: 1px solid var(--teal-soft);
+  box-shadow: var(--shadow-md);
+}
+
+/* ---- Reskin de Angular Material (superficies) ---------------------- */
+.mat-toolbar,
+.mat-mdc-card,
+.mat-mdc-dialog-container .mdc-dialog__surface,
+.mat-mdc-table,
+.mat-mdc-menu-panel {
+  background-color: var(--surface) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.mat-toolbar {
+  background-color: var(--bg-elevated) !important;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.mat-mdc-header-row {
+  background-color: var(--surface-hover) !important;
+}
+
+.mat-mdc-header-cell {
+  color: var(--text-muted) !important;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border-bottom-color: var(--border) !important;
+}
+
+.mat-mdc-cell,
+.mat-mdc-row {
+  color: var(--text) !important;
+  border-bottom-color: var(--border-soft) !important;
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  background-color: var(--surface-hover) !important;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  box-shadow: var(--shadow-lg) !important;
+
+  h2[mat-dialog-title],
+  .mat-mdc-dialog-title {
+    color: var(--text) !important;
+  }
+}
+
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-outline-color: var(--border);
+  --mdc-outlined-text-field-hover-outline-color: var(--text-faint);
+  --mdc-outlined-text-field-focus-outline-color: var(--violet);
+  --mdc-outlined-text-field-label-text-color: var(--text-muted);
+  --mdc-outlined-text-field-input-text-color: var(--text);
+  --mdc-outlined-text-field-focus-label-text-color: var(--violet);
+  --mdc-outlined-text-field-disabled-input-text-color: var(--text-faint);
+  --mat-select-enabled-trigger-text-color: var(--text);
+  --mat-select-placeholder-text-color: var(--text-muted);
+  --mat-select-panel-background-color: var(--surface);
+  --mat-select-enabled-arrow-color: var(--text-muted);
+  --mat-autocomplete-background-color: var(--surface);
+  --mat-option-label-text-color: var(--text);
+  --mat-option-selected-state-label-text-color: var(--violet-strong);
+  --mat-option-hover-state-layer-color: var(--surface-hover);
+  --mat-option-selected-state-layer-color: var(--violet-soft);
+  caret-color: var(--violet);
+}
+
+.mat-mdc-form-field input.mat-mdc-input-element,
+.mat-mdc-form-field textarea.mat-mdc-input-element,
+.mat-mdc-select-value,
+.mat-mdc-select-value-text {
+  color: var(--text) !important;
+  caret-color: var(--violet) !important;
+  -webkit-text-fill-color: var(--text) !important;
+}
+
+.mat-mdc-form-field input::placeholder,
+.mat-mdc-form-field textarea::placeholder {
+  color: var(--text-faint) !important;
+  opacity: 1;
+}
+
+.mat-mdc-select-arrow svg {
+  fill: var(--text-muted) !important;
+}
+
+.mat-mdc-form-field input:-webkit-autofill,
+.mat-mdc-form-field input:-webkit-autofill:hover,
+.mat-mdc-form-field input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text) !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--surface) inset !important;
+  caret-color: var(--violet) !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.cdk-overlay-container {
+  .mat-mdc-select-panel,
+  .mat-mdc-autocomplete-panel,
+  .mat-datepicker-content {
+    background-color: var(--surface) !important;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-sm) !important;
+    box-shadow: var(--shadow-md) !important;
+  }
+
+  .mat-mdc-option {
+    color: var(--text) !important;
+
+    .mdc-list-item__primary-text {
+      color: var(--text) !important;
+    }
+  }
+
+  .mat-mdc-option:hover:not(.mdc-list-item--disabled),
+  .mat-mdc-option.mat-mdc-option-active {
+    background-color: var(--surface-hover) !important;
+  }
+
+  .mat-mdc-option.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+    background-color: var(--violet-soft) !important;
+    color: var(--violet-strong) !important;
+  }
+
+  .cdk-overlay-backdrop {
+    background-color: rgba(33, 26, 53, 0.45);
+  }
+}
+
+.mat-mdc-menu-item {
+  color: var(--text) !important;
+}
+
+.mat-mdc-menu-item .mat-mdc-menu-item-text,
+.mat-mdc-menu-item mat-icon {
+  color: var(--text) !important;
+}
+
+.mat-mdc-menu-item:hover:not([disabled]) {
+  background-color: var(--surface-hover) !important;
+}
+
+/* ---- Botones de acción codificados por color ------------------------
+   Pastillas redondeadas con leve elevación en hover.
+   btn-create → violeta · btn-edit → teal · btn-delete → rosa */
+.mat-mdc-unelevated-button,
+.mat-mdc-raised-button {
+  --mdc-filled-button-container-shape: 999px;
+  --mdc-filled-button-container-elevation: 0;
+  --mdc-protected-button-container-elevation: 0;
+  box-shadow: none !important;
+  font-weight: 600;
+  transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.mat-mdc-outlined-button {
+  --mdc-outlined-button-container-shape: 999px;
+}
+
+.btn-create {
+  --mdc-filled-button-container-color: var(--violet);
+  --mdc-filled-button-label-text-color: #ffffff;
+}
+.btn-create:hover {
+  --mdc-filled-button-container-color: var(--violet-strong);
+  box-shadow: var(--shadow-md) !important;
+}
+.btn-create:active {
+  transform: scale(0.98);
+}
+
+.btn-edit {
+  color: var(--teal-strong) !important;
+  transition: background-color 0.15s ease;
+}
+.btn-edit:hover {
+  background-color: var(--teal-soft) !important;
+}
+
+.btn-delete {
+  color: var(--rose-strong) !important;
+  transition: background-color 0.15s ease;
+}
+.btn-delete:hover {
+  background-color: var(--rose-soft) !important;
+}
+
+/* Chips de estado */
+.status-chip {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px !important;
+  border: 1px solid transparent;
+
+  .mdc-evolution-chip__text-label {
+    color: inherit !important;
+  }
+}
+.status-chip.is-pending {
+  background-color: var(--amber-soft) !important;
+  color: var(--amber) !important;
+  border-color: rgba(217, 119, 6, 0.25);
+}
+.status-chip.is-progress {
+  background-color: var(--violet-soft) !important;
+  color: var(--violet-strong) !important;
+  border-color: rgba(124, 58, 237, 0.25);
+}
+.status-chip.is-completed {
+  background-color: var(--teal-soft) !important;
+  color: var(--teal-strong) !important;
+  border-color: rgba(15, 118, 110, 0.25);
+}
+
+/* Chips de rol (módulo de usuarios) */
+.status-chip.is-admin {
+  background-color: var(--violet-soft) !important;
+  color: var(--violet-strong) !important;
+  border-color: rgba(124, 58, 237, 0.25);
+}
+.status-chip.is-user {
+  background-color: var(--teal-soft) !important;
+  color: var(--teal-strong) !important;
+  border-color: rgba(15, 118, 110, 0.25);
+}

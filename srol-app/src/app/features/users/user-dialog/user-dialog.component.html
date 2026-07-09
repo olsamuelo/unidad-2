@@ -1,0 +1,61 @@
+<div class="dialog-header">
+  <span class="dialog-icon" [class.is-edit]="isEdit">
+    <mat-icon>{{ isEdit ? 'edit' : 'person_add' }}</mat-icon>
+  </span>
+  <div>
+    <h2 mat-dialog-title>{{ isEdit ? 'Editar usuario' : 'Nuevo usuario' }}</h2>
+    <p class="dialog-subtitle">
+      {{ isEdit ? 'Actualiza los datos de la cuenta' : 'Crea una cuenta de administrador o usuario normal' }}
+    </p>
+  </div>
+</div>
+
+<form [formGroup]="userForm" (ngSubmit)="onSave()">
+  <mat-dialog-content>
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Nombre completo</mat-label>
+      <input matInput formControlName="name" />
+      @if (isInvalid('name')) {
+        <mat-error>El nombre debe tener entre 3 y 100 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Correo electrónico</mat-label>
+      <input matInput type="email" formControlName="email" />
+      @if (isInvalid('email')) {
+        <mat-error>Ingresa un correo electrónico válido</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>{{ isEdit ? 'Nueva contraseña (opcional)' : 'Contraseña' }}</mat-label>
+      <input matInput type="password" formControlName="password" autocomplete="new-password" />
+      @if (isInvalid('password')) {
+        <mat-error>La contraseña debe tener al menos 6 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Rol</mat-label>
+      <mat-select formControlName="role">
+        @for (option of roleOptions; track option) {
+          <mat-option [value]="option">{{ roleLabels[option] }}</mat-option>
+        }
+      </mat-select>
+      @if (isInvalid('role')) {
+        <mat-error>Selecciona un rol</mat-error>
+      }
+      @if (isEditingSelf()) {
+        <mat-hint>No puedes cambiar tu propio rol</mat-hint>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" class="btn-cancel" (click)="onCancel()">Cancelar</button>
+    <button mat-flat-button class="btn-create" type="submit" [disabled]="saving()">
+      {{ saving() ? 'Guardando...' : 'Guardar' }}
+    </button>
+  </mat-dialog-actions>
+</form>

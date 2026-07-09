@@ -1,0 +1,95 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1>Tareas</h1>
+      <p class="page-subtitle">Panel de seguimiento del equipo</p>
+    </div>
+    <button mat-flat-button class="btn-create" (click)="onCreate()">
+      <mat-icon>add</mat-icon>
+      Nueva tarea
+    </button>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-value">{{ stats().total }}</span>
+      <span class="stat-label">Total</span>
+    </div>
+    <div class="stat-card is-pending">
+      <span class="stat-value">{{ stats().pending }}</span>
+      <span class="stat-label">Pendientes</span>
+    </div>
+    <div class="stat-card is-progress">
+      <span class="stat-value">{{ stats().inProgress }}</span>
+      <span class="stat-label">En progreso</span>
+    </div>
+    <div class="stat-card is-completed">
+      <span class="stat-value">{{ stats().completed }}</span>
+      <span class="stat-label">Completadas</span>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-box">
+      <mat-spinner diameter="36"></mat-spinner>
+    </div>
+  } @else {
+    <div class="table-card">
+      <table mat-table [dataSource]="tasks()" class="full-width">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let task" class="mono">#{{ task.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Título</th>
+          <td mat-cell *matCellDef="let task" class="title-cell">{{ task.title }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Descripción</th>
+          <td mat-cell *matCellDef="let task" class="description-cell">{{ task.description }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Estado</th>
+          <td mat-cell *matCellDef="let task">
+            <mat-chip class="status-chip" [ngClass]="statusClass(task.status)">
+              {{ getStatusLabel(task.status) }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef>Creada</th>
+          <td mat-cell *matCellDef="let task" class="mono">{{ task.createdAt | date: 'dd-MM-yyyy' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let task" class="actions-cell">
+            <button mat-icon-button class="btn-edit" (click)="onEdit(task)" aria-label="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button class="btn-delete" (click)="onDelete(task)" aria-label="Eliminar">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      @if (tasks().length === 0) {
+        <div class="empty-state">
+          <mat-icon>inbox</mat-icon>
+          <p>No hay tareas registradas todavía.</p>
+          <button mat-stroked-button class="btn-create-outline" (click)="onCreate()">
+            Crear la primera tarea
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>

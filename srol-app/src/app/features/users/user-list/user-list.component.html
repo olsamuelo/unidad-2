@@ -1,0 +1,92 @@
+<div class="page-container">
+  <div class="page-header">
+    <div>
+      <h1>Usuarios</h1>
+      <p class="page-subtitle">Administra las cuentas de administrador y de usuario normal</p>
+    </div>
+    <button mat-flat-button class="btn-create" (click)="onCreate()">
+      <mat-icon>person_add</mat-icon>
+      Nuevo usuario
+    </button>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-value">{{ stats().total }}</span>
+      <span class="stat-label">Total</span>
+    </div>
+    <div class="stat-card is-admin">
+      <span class="stat-value">{{ stats().admins }}</span>
+      <span class="stat-label">Administradores</span>
+    </div>
+    <div class="stat-card is-user">
+      <span class="stat-value">{{ stats().normales }}</span>
+      <span class="stat-label">Usuarios normales</span>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-box">
+      <mat-spinner diameter="36"></mat-spinner>
+    </div>
+  } @else {
+    <div class="table-card">
+      <table mat-table [dataSource]="users()" class="full-width">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let user" class="mono">#{{ user.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let user" class="title-cell">{{ user.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Correo</th>
+          <td mat-cell *matCellDef="let user" class="description-cell">{{ user.email }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>Rol</th>
+          <td mat-cell *matCellDef="let user">
+            <mat-chip class="status-chip" [ngClass]="roleClass(user.role)">
+              {{ getRoleLabel(user.role) }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let user" class="actions-cell">
+            <button mat-icon-button class="btn-edit" (click)="onEdit(user)" aria-label="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              class="btn-delete"
+              (click)="onDelete(user)"
+              [disabled]="user.id === currentUserId()"
+              aria-label="Eliminar"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      @if (users().length === 0) {
+        <div class="empty-state">
+          <mat-icon>group_off</mat-icon>
+          <p>No hay usuarios registrados todavía.</p>
+          <button mat-stroked-button class="btn-create-outline" (click)="onCreate()">
+            Crear el primer usuario
+          </button>
+        </div>
+      }
+    </div>
+  }
+</div>
